@@ -45,7 +45,7 @@ Pré-requis : `python3`, `node`, `zip`, `rsync` (tous présents par défaut sur 
 
 ## Installation (mode développeur)
 
-1. Clonez ce dépôt : `git clone git@ni-git-01.srv.nihost.fr:ni/niboites-browser.git`
+1. Clonez ce dépôt : `git clone https://github.com/nihost/niboites-browser.git`
 2. Ouvrez `chrome://extensions` (Chrome/Edge) ou `about:debugging` (Firefox)
 3. Activez le **mode développeur**
 4. Cliquez sur **« Charger l'extension non empaquetée »** et sélectionnez le dossier cloné
@@ -112,6 +112,10 @@ L'extension suit les engagements de marque NiBoites / NiHost :
 - **FR-first** : FR langue de référence, EN fourni ; lien panel vers ni-boites.fr, commande/facturation/support vers ni-host.com
 - **Accessibilité** : focus visibles (`:focus-visible`), modale au clavier (Échap, focus à l'ouverture), en-têtes de boîte activables au clavier
 - **Copy** : aucun claim inventé, pas de « unlimited servers », jeux : Minecraft, Hytale, « and more »
+
+## Open source
+
+Ce projet est publié en open source par **NiHost** sur [github.com/nihost/niboites-browser](https://github.com/nihost/niboites-browser), licence **MIT** (voir `LICENSE`). Contributions bienvenues (issues, pull requests).
 
 ## Sécurité
 
