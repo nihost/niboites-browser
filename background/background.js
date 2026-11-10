@@ -8,7 +8,12 @@
  *  - Badge colour: green if any server running, grey otherwise
  */
 
-importScripts('../lib/api.js');
+// Cross-browser : Chrome MV3 charge ce fichier comme service_worker
+// (importScripts requis) ; Firefox le charge via background.scripts avec
+// lib/api.js déjà inclus, donc on ne fait rien ici.
+if (typeof importScripts === 'function') {
+  importScripts('../lib/api.js');
+}
 
 const api = globalThis.NiHostAPI;
 

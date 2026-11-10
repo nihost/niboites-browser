@@ -48,15 +48,13 @@ Pré-requis : `python3`, `node`, `zip`, `rsync` (tous présents par défaut sur 
 | Firefox AMO | idem, ou le dossier dézippé |
 | `.crx` signé (hors store) | `google-chrome --pack-extension=. --pack-extension-key=key.pem` |
 
-## Installation (mode développeur)
+## Installation
 
 1. Clonez ce dépôt : `git clone https://github.com/nihost/niboites-browser.git`
-2. Ouvrez `chrome://extensions` (Chrome/Edge) ou `about:debugging` (Firefox)
-3. Activez le **mode développeur**
-4. Cliquez sur **« Charger l'extension non empaquetée »** et sélectionnez le dossier cloné
-   (ou dézippez `dist/niboites-<version>.zip` et chargez le dossier obtenu)
-5. Cliquez sur l'icône de l'extension **NiBoites** dans la barre d'outils, puis sur **Options**
-6. Collez votre **jeton API** (créé sur [boites.ni-host.com](https://boites.ni-host.com) > Compte > API) puis cliquez sur **Tester le jeton**
+2. **Chrome / Edge** : ouvrez `chrome://extensions`, activez le **mode développeur**, cliquez sur **« Charger l'extension non empaquetée »** et sélectionnez le dossier cloné (ou dézippez `dist/niboites-<version>.zip` et chargez le dossier obtenu).
+   **Firefox** : ouvrez `about:debugging#/runtime/this-firefox`, cliquez sur **« Charger un module temporaire »** et sélectionnez le fichier `dist/niboites-<version>.zip` (ou n'importe quel fichier du dossier dézippé, ex. `manifest.json`).
+3. Cliquez sur l'icône de l'extension **NiBoites** dans la barre d'outils, puis sur **Options**
+4. Collez votre **jeton API** (créé sur [boites.ni-host.com](https://boites.ni-host.com) > Compte > API) puis cliquez sur **Tester le jeton**
 
 ## Utilisation
 

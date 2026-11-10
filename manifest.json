@@ -18,9 +18,13 @@
     },
     "default_title": "NiBoites"
   },
-  "options_page": "options/options.html",
+  "options_ui": {
+    "page": "options/options.html",
+    "open_in_tab": true
+  },
   "background": {
-    "service_worker": "background/background.js"
+    "service_worker": "background/background.js",
+    "scripts": ["lib/api.js", "background/background.js"]
   },
   "permissions": [
     "storage",

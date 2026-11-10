@@ -41,8 +41,10 @@ if (m.action) {
   checkFile(m.action.default_popup, 'action.default_popup');
   for (const [size, p] of Object.entries(m.action.default_icon || {})) checkFile(p, `action.default_icon[${size}]`);
 }
+checkFile(m.options_ui && m.options_ui.page, 'options_ui.page');
 checkFile(m.options_page, 'options_page');
 checkFile(m.background && m.background.service_worker, 'background.service_worker');
+for (const s of (m.background && m.background.scripts) || []) checkFile(s, 'background.scripts');
 
 // default_locale cohérent avec _locales/
 if (m.default_locale) {
@@ -77,6 +79,10 @@ for (const html of ['popup/popup.html', 'options/options.html']) {
   if (!fs.existsSync(f)) continue;
   const content = fs.readFileSync(f, 'utf8');
   const dir = path.dirname(html);
+  // CSP MV3 : aucun script inline autorisé dans les pages d'extension
+  if (/<script(?![^>]*\bsrc=)[^>]*>[\s\S]*?<\/script>/i.test(content)) {
+    err(`${html} contient un <script> inline (interdit par la CSP MV3)`);
+  }
   for (const match of content.matchAll(/(?:src|href)="([^"#]+)"/g)) {
     const ref = match[1];
     if (/^(https?:|data:|#)/.test(ref)) continue;
