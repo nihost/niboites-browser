@@ -24,17 +24,17 @@ m = json.load(open('manifest.json'))
 assert m['manifest_version'] == 3, 'manifest_version doit être 3'
 for f in sorted(glob.glob('_locales/*/messages.json')):
     json.load(open(f))
-    print(f'  ✓ {f}')
-print('  ✓ manifest.json')
+    print(f'  OK {f}')
+print('  OK manifest.json')
 PY
 
 echo "==> Vérification syntaxique JS"
 for f in lib/*.js popup/*.js options/*.js background/*.js; do
   node --check "$f"
-  echo "  ✓ $f"
+  echo "  OK $f"
 done
 
-echo "==> Packaging → $OUT"
+echo "==> Packaging : $OUT"
 rm -rf dist
 mkdir -p dist
 STAGE=$(mktemp -d)

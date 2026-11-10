@@ -96,15 +96,15 @@
     const specs = boite.specs || {};
     const specsHtml = `
       <div class="boite-specs">
-        <span>💾 <b>${fmtMb(specs.memoryMb)}</b></span>
-        <span>⚡ <b>${specs.cpu ?? '—'}%</b></span>
-        <span>💿 <b>${fmtMb(specs.diskMb)}</b></span>
-        <span>🖥 <b>${specs.maxServers ?? '—'}</b></span>
+        <span>RAM <b>${fmtMb(specs.memoryMb)}</b></span>
+        <span>CPU <b>${specs.cpu ?? '—'}%</b></span>
+        <span>Disque <b>${fmtMb(specs.diskMb)}</b></span>
+        <span>Serveurs max <b>${specs.maxServers ?? '—'}</b></span>
       </div>`;
 
     card.innerHTML = `
       <div class="boite-header">
-        <span class="boite-name">📦 ${escapeHtml(boite.name || boite.id)} ${statusBadge(boite.status)}</span>
+        <span class="boite-name">${escapeHtml(boite.name || boite.id)} ${statusBadge(boite.status)}</span>
         <span class="chevron">▼</span>
       </div>
       ${specsHtml}
@@ -144,10 +144,10 @@
       </div>
       <div class="server-actions">
         <button class="pwr-btn start"    data-signal="start"   title="${t('start')}"   ${!running && !busy ? '' : 'disabled'}>▶</button>
-        <button class="pwr-btn stop"     data-signal="stop"    title="${t('stop')}"    ${running && !busy ? '' : 'disabled'}>⏹</button>
-        <button class="pwr-btn restart"  data-signal="restart" title="${t('restart')}" ${running && !busy ? '' : 'disabled'}>⟳</button>
+        <button class="pwr-btn stop"     data-signal="stop"    title="${t('stop')}"    ${running && !busy ? '' : 'disabled'}>■</button>
+        <button class="pwr-btn restart"  data-signal="restart" title="${t('restart')}" ${running && !busy ? '' : 'disabled'}>↻</button>
         <button class="pwr-btn kill"     data-signal="kill"    title="${t('kill')}"    ${running && !busy ? '' : 'disabled'}>✕</button>
-        <button class="pwr-btn detail"   data-action="detail"  title="Détails">⋯</button>
+        <button class="pwr-btn detail"   data-action="detail"  title="Détails">…</button>
       </div>`;
 
     // Power buttons
@@ -202,7 +202,7 @@
       ? backups.map((b) => `
           <div class="backup-item">
             <div>
-              <div>💾 ${escapeHtml(b.name || b.id)}</div>
+              <div>${escapeHtml(b.name || b.id)}</div>
               <div class="meta">${fmtBytes(b.sizeBytes)} · ${fmtDate(b.completedAt)}</div>
             </div>
             <span class="${b.successful ? 'backup-success' : 'backup-failed'}">${b.successful ? '✓' : '✗'}</span>
@@ -216,9 +216,9 @@
           return `
           <div class="schedule-item">
             <div>
-              <div>⏰ ${escapeHtml(s.name || `#${s.id}`)} <span class="${s.active ? 'schedule-active' : 'schedule-inactive'}">${s.active ? '●' : '○'}</span></div>
+              <div>${escapeHtml(s.name || `#${s.id}`)} <span class="${s.active ? 'schedule-active' : 'schedule-inactive'}">${s.active ? 'actif' : 'inactif'}</span></div>
               <div class="cron">${escapeHtml(cron)}</div>
-              <div class="next">${t('lastRefresh')}: ${fmtDate(s.lastRunAt)} → next ${fmtDate(s.nextRunAt)}</div>
+              <div class="next">dernier : ${fmtDate(s.lastRunAt)} · suivant : ${fmtDate(s.nextRunAt)}</div>
               ${actions ? `<div class="next">${escapeHtml(actions)}</div>` : ''}
             </div>
           </div>`;
@@ -253,8 +253,8 @@
         <h3>${t('power')}</h3>
         <div class="power-grid">
           <button class="btn primary" data-signal="start"   ${!running && !busy ? '' : 'disabled'}>▶ ${t('start')}</button>
-          <button class="btn ghost"   data-signal="stop"    ${running && !busy ? '' : 'disabled'}>⏹ ${t('stop')}</button>
-          <button class="btn ghost"   data-signal="restart" ${running && !busy ? '' : 'disabled'}>⟳ ${t('restart')}</button>
+          <button class="btn ghost"   data-signal="stop"    ${running && !busy ? '' : 'disabled'}>■ ${t('stop')}</button>
+          <button class="btn ghost"   data-signal="restart" ${running && !busy ? '' : 'disabled'}>↻ ${t('restart')}</button>
           <button class="btn danger"  data-signal="kill"    ${running && !busy ? '' : 'disabled'}>✕ ${t('kill')}</button>
         </div>
       </div>
@@ -371,7 +371,7 @@
   async function refreshData(spin = true) {
     if (spin) {
       els.btnRefresh.classList.add('spinning');
-      els.btnRefresh.textContent = '⟳';
+      els.btnRefresh.textContent = '↻';
     }
     clearError();
     try {

@@ -2,7 +2,7 @@
  * NiBoites — background service worker (Manifest V3)
  *
  * Responsibilities:
- *  - Keyboard shortcut "refresh-all" → ping every open popup to refresh
+ *  - Keyboard shortcut "refresh-all" : ping every open popup to refresh
  *  - Periodic alarm that refreshes the cached fleet state and updates
  *    the toolbar badge with the number of running servers
  *  - Badge colour: green if any server running, grey otherwise
@@ -105,7 +105,7 @@ chrome.commands.onCommand.addListener(async (command) => {
 chrome.storage.onChanged.addListener((changes, area) => {
   if (area !== 'local') return;
   if (changes[api.STORAGE_KEYS.TOKEN]) {
-    // Token changed → refresh badge immediately
+    // Token changed : refresh badge immediately
     updateBadge();
   }
 });
