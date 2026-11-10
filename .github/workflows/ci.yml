@@ -1,0 +1,43 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  validate-and-package:
+    name: Valider + packager
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Version du manifest
+        id: version
+        run: echo "v=$(node -p "require('./manifest.json').version")" >> "$GITHUB_OUTPUT"
+
+      - name: Valider le manifest MV3
+        run: node scripts/validate-manifest.js
+
+      - name: Build (validation JSON/JS + zip)
+        run: ./scripts/build.sh
+
+      - name: Lister le contenu du zip
+        run: unzip -l dist/*.zip
+
+      - name: Upload du zip en artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: niboites-${{ steps.version.outputs.v }}-${{ github.sha }}
+          path: dist/niboites-*.zip
+          retention-days: 30

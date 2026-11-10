@@ -1,6 +1,8 @@
 # NiBoites — Extension navigateur
 
-**NiBoites by NiHost** est une extension Chrome / Edge / Firefox (Manifest V3) pour contrôler et gérer vos **boîtes et serveurs** depuis votre navigateur, via l'[API publique NiBoites v1](https://boites.ni-host.com/docs). Le panel reste [ni-boites.fr](https://ni-boites.fr) ; l'extension couvre les actions routinières (statut, power, console, backups) sans ouvrir le panel.
+[![CI](https://github.com/nihost/niboites-browser/actions/workflows/ci.yml/badge.svg)](https://github.com/nihost/niboites-browser/actions/workflows/ci.yml)
+
+**NiBoites by NiHost** est une extension Chrome / Edge / Firefox (Manifest V3) pour contrôler et gérer vos **boîtes et serveurs** depuis votre navigateur, via l'[API publique NiBoites v1](https://boites.ni-host.com/docs). Le panel reste [boites.ni-host.com](https://boites.ni-host.com) ; l'extension couvre les actions routinières (statut, power, console, backups) sans ouvrir le panel.
 
 ![NiBoites](icons/icon128.png)
 
@@ -25,8 +27,11 @@ Aucun bundling ni compilation : l'extension est en **HTML/CSS/JS vanilla (Manife
 Un seul script pour valider + packager :
 
 ```bash
-./scripts/build.sh
+./scripts/build.sh          # valide + génère dist/niboites-<version>.zip
+node scripts/validate-manifest.js   # validation structurelle du manifest MV3 seule
 ```
+
+La **CI GitHub Actions** (`.github/workflows/ci.yml`) exécute ces mêmes contrôles à chaque push/PR sur `main` et publie le `.zip` en artifact téléchargeable.
 
 Il :
 1. valide `manifest.json` et les locales (`_locales/*/messages.json`)
@@ -51,7 +56,7 @@ Pré-requis : `python3`, `node`, `zip`, `rsync` (tous présents par défaut sur 
 4. Cliquez sur **« Charger l'extension non empaquetée »** et sélectionnez le dossier cloné
    (ou dézippez `dist/niboites-<version>.zip` et chargez le dossier obtenu)
 5. Cliquez sur l'icône de l'extension **NiBoites** dans la barre d'outils, puis sur **Options**
-6. Collez votre **jeton API** (créé sur [ni-boites.fr](https://ni-boites.fr) > Compte > API) puis cliquez sur **Tester le jeton**
+6. Collez votre **jeton API** (créé sur [boites.ni-host.com](https://boites.ni-host.com) > Compte > API) puis cliquez sur **Tester le jeton**
 
 ## Utilisation
 
@@ -110,7 +115,7 @@ L'extension suit les engagements de marque NiBoites / NiHost :
 - **Co-branding** : « NiBoites by NiHost » dans le popup et les options
 - **Logo** : mascotte officielle NiBoites (la boîte-cookie, `icons/logo-cookie.svg`) pour les icônes d'extension et le header
 - **Terminologie** : toujours « boîte / boîtes » dans les textes visibles (FR et EN), jamais « box »
-- **FR-first** : FR langue de référence, EN fourni ; lien panel vers ni-boites.fr, commande/facturation/support vers ni-host.com
+- **FR-first** : FR langue de référence, EN fourni ; lien panel vers boites.ni-host.com, commande/facturation/support vers ni-host.com
 - **Accessibilité** : focus visibles (`:focus-visible`), modale au clavier (Échap, focus à l'ouverture), en-têtes de boîte activables au clavier
 - **Copy** : aucun claim inventé, pas de « unlimited servers », jeux : Minecraft, Hytale, « and more »
 

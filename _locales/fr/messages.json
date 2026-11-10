@@ -132,7 +132,7 @@
     "description": "Token label in options"
   },
   "tokenHelp": {
-    "message": "Créez un jeton sur ni-boites.fr (Compte > API). Le jeton est stocké localement dans votre navigateur.",
+    "message": "Créez un jeton sur boites.ni-host.com (Compte > API). Le jeton est stocké localement dans votre navigateur.",
     "description": "Token help text"
   },
   "save": {
@@ -200,7 +200,7 @@
     "description": "Refresh interval label"
   },
   "openPanel": {
-    "message": "Ouvrir le panel ni-boites.fr",
+    "message": "Ouvrir le panel boites.ni-host.com",
     "description": "Link to panel"
   },
   "copied": {

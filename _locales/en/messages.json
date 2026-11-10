@@ -132,7 +132,7 @@
     "description": "Token label in options"
   },
   "tokenHelp": {
-    "message": "Create a token on ni-boites.fr (Account > API). The token is stored locally in your browser.",
+    "message": "Create a token on boites.ni-host.com (Account > API). The token is stored locally in your browser.",
     "description": "Token help text"
   },
   "save": {
@@ -200,7 +200,7 @@
     "description": "Refresh interval label"
   },
   "openPanel": {
-    "message": "Open the ni-boites.fr panel",
+    "message": "Open the boites.ni-host.com panel",
     "description": "Link to panel"
   },
   "copied": {

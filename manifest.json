@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "NiBoites — Contrôle rapide",
   "version": "1.0.0",
-  "description": "Gérez vos boîtes et serveurs NiBoites (ni-boites.fr) depuis votre navigateur : statut, start/stop/restart, console, backups.",
+  "description": "Gérez vos boîtes et serveurs NiBoites (boites.ni-host.com) depuis votre navigateur : statut, start/stop/restart, console, backups.",
   "default_locale": "fr",
   "icons": {
     "16": "icons/icon16.png",
