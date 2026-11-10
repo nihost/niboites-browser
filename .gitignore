@@ -23,3 +23,6 @@ npm-debug.log*
 # Env / secrets
 .env
 .env.local
+
+# Review locale — ne pas versionner
+docs/endpoints-proposal.md
