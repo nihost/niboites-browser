@@ -347,6 +347,29 @@ h1, h2, h3, .boite-name, .server-name { font-family: var(--font-head); }
 .backup-success { color: var(--green); }
 .backup-failed { color: var(--red); }
 
+/* Actions sur backups / schedules */
+.item-actions { display: flex; align-items: center; gap: 3px; flex-shrink: 0; }
+.item-actions .pwr-btn { width: 24px; height: 24px; font-size: 11px; }
+
+/* Métriques : barres used/total */
+.meter-row { display: flex; align-items: center; gap: 8px; margin-bottom: 5px; font-size: 11px; }
+.meter-label { width: 110px; color: var(--text-dim); flex-shrink: 0; }
+.meter { flex: 1; height: 8px; background: var(--bg-hover); border-radius: 4px; overflow: hidden; }
+.meter-fill { display: block; height: 100%; background: var(--blue); border-radius: 4px; transition: width 0.3s; }
+.meter-val { width: 110px; text-align: right; font-family: var(--font-mono); font-size: 10px; color: var(--text-dim); flex-shrink: 0; }
+
+/* Formulaire création de tâche */
+.schedule-create { margin-top: 8px; }
+.schedule-create summary { cursor: pointer; font-size: 12px; color: var(--blue); font-weight: 600; }
+.schedule-form { display: flex; flex-direction: column; gap: 6px; margin-top: 8px; }
+.schedule-form input, .schedule-form select {
+  background: var(--bg); border: 1px solid var(--border); color: var(--text);
+  border-radius: 7px; padding: 6px 9px; font-size: 12px; font-family: var(--font-ui);
+}
+.schedule-form input:focus, .schedule-form select:focus { outline: none; border-color: var(--accent); }
+.cron-inputs { display: flex; gap: 6px; }
+.cron-inputs > * { flex: 1; min-width: 0; }
+
 .schedule-item .cron { font-family: var(--font-mono); font-size: 11px; color: var(--blue); }
 .schedule-item .next { font-size: 11px; color: var(--text-dim); }
 .schedule-active { color: var(--green); font-size: 11px; }

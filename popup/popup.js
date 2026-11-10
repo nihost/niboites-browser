@@ -187,24 +187,59 @@
     els.modalClose.focus(); // a11y : focus dans la modale à l'ouverture
     els.modalBody.innerHTML = `<div class="loading">${t('loading')}</div>`;
 
-    // Fetch fresh detail + backups + schedules in parallel
-    const [detail, backups, schedules] = await Promise.allSettled([
+    // Fetch fresh detail + backups + schedules + metrics + sftp in parallel
+    const [detail, backups, schedules, metrics, sftp] = await Promise.allSettled([
       api.apiServer(server.id),
       api.apiServerBackups(server.id),
       api.apiServerSchedules(server.id),
+      api.apiServerMetrics(server.id),
+      api.apiServerSftp(server.id),
     ]);
 
     const d = detail.status === 'fulfilled' ? detail.value : server;
     const bks = backups.status === 'fulfilled' ? (backups.value.data || []) : [];
     const schs = schedules.status === 'fulfilled' ? (schedules.value.data || []) : [];
+    const met = metrics.status === 'fulfilled' ? metrics.value : null;
+    const sftpInfo = sftp.status === 'fulfilled' ? sftp.value : null;
 
-    renderModal(d, bks, schs, boite);
+    renderModal(d, bks, schs, met, sftpInfo, boite);
   }
 
-  function renderModal(server, backups, schedules, boite) {
+  function meter(label, used, total, unit) {
+    const pct = total > 0 ? Math.min(100, Math.round((used / total) * 100)) : 0;
+    return `
+      <div class="meter-row">
+        <span class="meter-label">${label}</span>
+        <span class="meter"><span class="meter-fill" style="width:${pct}%"></span></span>
+        <span class="meter-val">${used} / ${total} ${unit} (${pct}%)</span>
+      </div>`;
+  }
+
+  function renderModal(server, backups, schedules, metrics, sftpInfo, boite) {
     const info = api.statusInfo(server.status);
     const running = (server.status || '').toLowerCase() === 'running';
     const busy = busyServers.has(server.id);
+
+    // Métriques courantes (GET /metrics)
+    const metricsHtml = metrics
+      ? `
+        <div class="detail-grid" style="margin-bottom:6px">
+          <span class="label">${t('state')}</span><span class="value">${escapeHtml(metrics.state ?? '—')}</span>
+          <span class="label">${t('cpuUsage')}</span><span class="value">${metrics.cpuPercent ?? '—'}%</span>
+        </div>
+        ${meter(t('ramUsage'), metrics.memoryMb?.used ?? 0, metrics.memoryMb?.total ?? 0, 'Mo')}
+        ${meter(t('diskUsage'), metrics.diskMb?.used ?? 0, metrics.diskMb?.total ?? 0, 'Mo')}`
+      : `<div class="empty-note">${t('metricsUnavailable')}</div>`;
+
+    // SFTP (GET /sftp) — le mot de passe n'est jamais exposé par l'API
+    const sftpHtml = sftpInfo
+      ? `
+        <div class="detail-grid">
+          <span class="label">Hôte</span><span class="value">${escapeHtml(sftpInfo.host ?? '—')}:${sftpInfo.port ?? 22}</span>
+          <span class="label">${t('sftpUser')}</span><span class="value"><code>${escapeHtml(sftpInfo.username ?? '—')}</code></span>
+        </div>
+        <div class="empty-note" style="text-align:left">${t('sftpHint')}</div>`
+      : '';
 
     const backupsHtml = backups.length
       ? backups.map((b) => `
@@ -213,21 +248,30 @@
               <div>${escapeHtml(b.name || b.id)}</div>
               <div class="meta">${fmtBytes(b.sizeBytes)} · ${fmtDate(b.completedAt)}</div>
             </div>
-            <span class="${b.successful ? 'backup-success' : 'backup-failed'}">${b.successful ? '✓' : '✗'}</span>
+            <div class="item-actions">
+              <span class="${b.successful ? 'backup-success' : 'backup-failed'}">${b.successful ? '✓' : '✗'}</span>
+              <button class="pwr-btn restart" data-backup-restore="${escapeHtml(b.id)}" title="${t('restore')}">↺</button>
+              <button class="pwr-btn kill" data-backup-delete="${escapeHtml(b.id)}" title="${t('delete')}">✕</button>
+            </div>
           </div>`).join('')
       : `<div class="empty-note">—</div>`;
 
     const schedulesHtml = schedules.length
       ? schedules.map((s) => {
           const cron = s.cron ? `${s.cron.minute ?? '*'} ${s.cron.hour ?? '*'} * * ${s.cron.dayOfWeek ?? '*'}` : '';
-          const actions = (s.actions || []).map((a) => `${a.action}:${a.payload}`).join(', ');
+          const actions = (s.actions || []).map((a) => `${a.action}${a.payload ? ':' + a.payload : ''}`).join(', ');
           return `
           <div class="schedule-item">
             <div>
-              <div>${escapeHtml(s.name || `#${s.id}`)} <span class="${s.active ? 'schedule-active' : 'schedule-inactive'}">${s.active ? 'actif' : 'inactif'}</span></div>
+              <div>${escapeHtml(s.name || `#${s.id}`)} <span class="${s.active ? 'schedule-active' : 'schedule-inactive'}">${s.active ? t('active') : t('inactive')}</span></div>
               <div class="cron">${escapeHtml(cron)}</div>
               <div class="next">dernier : ${fmtDate(s.lastRunAt)} · suivant : ${fmtDate(s.nextRunAt)}</div>
               ${actions ? `<div class="next">${escapeHtml(actions)}</div>` : ''}
+            </div>
+            <div class="item-actions">
+              <button class="pwr-btn start"   data-schedule-run="${s.id}" title="${t('runNow')}">▶</button>
+              <button class="pwr-btn restart" data-schedule-toggle="${s.id}" data-active="${s.active ? '1' : '0'}" title="${t('active')}/${t('inactive')}">${s.active ? '☑' : '☐'}</button>
+              <button class="pwr-btn kill"    data-schedule-delete="${s.id}" title="${t('delete')}">✕</button>
             </div>
           </div>`;
         }).join('')
@@ -255,6 +299,19 @@
           ${server.boiteId ? `<span class="label">Boîte</span><span class="value">${escapeHtml(boite?.name || server.boiteId)}</span>` : ''}
         </div>
       </div>
+
+      <!-- Métriques -->
+      <div class="detail-section">
+        <h3>${t('metrics')}</h3>
+        ${metricsHtml}
+      </div>
+
+      <!-- SFTP -->
+      ${sftpHtml ? `
+      <div class="detail-section">
+        <h3>${t('sftp')}</h3>
+        ${sftpHtml}
+      </div>` : ''}
 
       <!-- Power -->
       <div class="detail-section">
@@ -290,6 +347,26 @@
       <div class="detail-section">
         <h3>${t('schedules')}</h3>
         ${schedulesHtml}
+        <details class="schedule-create">
+          <summary>${t('newSchedule')}</summary>
+          <div class="schedule-form">
+            <input type="text" id="sch-name" maxlength="100" placeholder="${t('fieldName')}" />
+            <div class="cron-inputs">
+              <input type="text" id="sch-minute" placeholder="${t('cronMinute')}" value="0" />
+              <input type="text" id="sch-hour" placeholder="${t('cronHour')}" value="4" />
+              <input type="text" id="sch-day" placeholder="${t('cronDay')}" value="*" />
+            </div>
+            <div class="cron-inputs">
+              <select id="sch-action">
+                <option value="power">power</option>
+                <option value="backup">backup</option>
+                <option value="command">command</option>
+              </select>
+              <input type="text" id="sch-payload" placeholder="${t('schedulePayload')}" />
+            </div>
+            <button class="btn primary small" id="sch-create" ${!busy ? '' : 'disabled'}>${t('create')}</button>
+          </div>
+        </details>
       </div>
     `;
 
@@ -341,6 +418,91 @@
         showError(`${t('error')}: ${e.message}`);
       } finally {
         backupBtn.disabled = false;
+      }
+    });
+
+    // Restaurer une sauvegarde (le serveur redémarre)
+    els.modalBody.querySelectorAll('[data-backup-restore]').forEach((btn) => {
+      btn.addEventListener('click', async () => {
+        if (!confirm(t('confirmRestore'))) return;
+        const truncate = confirm(`${t('truncate')} ?`);
+        try {
+          await api.apiBackupRestore(server.id, btn.dataset.backupRestore, truncate);
+          showToast(t('backupRestored'));
+          openServerModal(server, boite);
+        } catch (e) { showError(`${t('error')}: ${e.message}`); }
+      });
+    });
+
+    // Supprimer une sauvegarde (irréversible)
+    els.modalBody.querySelectorAll('[data-backup-delete]').forEach((btn) => {
+      btn.addEventListener('click', async () => {
+        if (!confirm(t('confirmDeleteBackup'))) return;
+        try {
+          await api.apiBackupDelete(server.id, btn.dataset.backupDelete);
+          showToast(t('backupDeleted'));
+          openServerModal(server, boite);
+        } catch (e) { showError(`${t('error')}: ${e.message}`); }
+      });
+    });
+
+    // Exécuter une tâche maintenant
+    els.modalBody.querySelectorAll('[data-schedule-run]').forEach((btn) => {
+      btn.addEventListener('click', async () => {
+        try {
+          await api.apiScheduleRun(server.id, btn.dataset.scheduleRun);
+          showToast(t('scheduleRunDone'));
+        } catch (e) { showError(`${t('error')}: ${e.message}`); }
+      });
+    });
+
+    // Activer / désactiver une tâche
+    els.modalBody.querySelectorAll('[data-schedule-toggle]').forEach((btn) => {
+      btn.addEventListener('click', async () => {
+        const next = btn.dataset.active === '1' ? false : true;
+        try {
+          await api.apiScheduleUpdate(server.id, btn.dataset.scheduleToggle, { active: next });
+          showToast(t('scheduleUpdated'));
+          openServerModal(server, boite);
+        } catch (e) { showError(`${t('error')}: ${e.message}`); }
+      });
+    });
+
+    // Supprimer une tâche
+    els.modalBody.querySelectorAll('[data-schedule-delete]').forEach((btn) => {
+      btn.addEventListener('click', async () => {
+        if (!confirm(t('confirmDeleteSchedule'))) return;
+        try {
+          await api.apiScheduleDelete(server.id, btn.dataset.scheduleDelete);
+          showToast(t('scheduleDeleted'));
+          openServerModal(server, boite);
+        } catch (e) { showError(`${t('error')}: ${e.message}`); }
+      });
+    });
+
+    // Créer une tâche planifiée
+    const schCreate = els.modalBody.querySelector('#sch-create');
+    if (schCreate) schCreate.addEventListener('click', async () => {
+      const name = els.modalBody.querySelector('#sch-name').value.trim();
+      const minute = els.modalBody.querySelector('#sch-minute').value.trim() || '*';
+      const hour = els.modalBody.querySelector('#sch-hour').value.trim() || '*';
+      const day = els.modalBody.querySelector('#sch-day').value.trim() || '*';
+      const action = els.modalBody.querySelector('#sch-action').value;
+      const payload = els.modalBody.querySelector('#sch-payload').value.trim();
+      const body = {
+        name: name || undefined,
+        active: true,
+        cron: { minute, hour, dayOfWeek: day },
+        actions: [{ action, ...(payload ? { payload } : {}), timeOffset: 0 }],
+      };
+      schCreate.disabled = true;
+      try {
+        await api.apiScheduleCreate(server.id, body);
+        showToast(t('scheduleCreated'));
+        openServerModal(server, boite);
+      } catch (e) {
+        showError(`${t('error')}: ${e.message}`);
+        schCreate.disabled = false;
       }
     });
   }

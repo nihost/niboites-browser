@@ -226,5 +226,129 @@
   "openInPanel": {
     "message": "Ouvrir dans le panel",
     "description": "Open server in the panel"
+  },
+  "metrics": {
+    "message": "Métriques",
+    "description": ""
+  },
+  "cpuUsage": {
+    "message": "CPU",
+    "description": ""
+  },
+  "ramUsage": {
+    "message": "Mémoire utilisée",
+    "description": ""
+  },
+  "diskUsage": {
+    "message": "Disque utilisé",
+    "description": ""
+  },
+  "state": {
+    "message": "État",
+    "description": ""
+  },
+  "sftp": {
+    "message": "SFTP",
+    "description": ""
+  },
+  "sftpHint": {
+    "message": "Le mot de passe n'est jamais exposé par l'API : réinitialisez-le depuis le panel (Boîte > SFTP).",
+    "description": ""
+  },
+  "sftpUser": {
+    "message": "Identifiant",
+    "description": ""
+  },
+  "restore": {
+    "message": "Restaurer",
+    "description": ""
+  },
+  "delete": {
+    "message": "Supprimer",
+    "description": ""
+  },
+  "truncate": {
+    "message": "Vider les fichiers avant restauration",
+    "description": ""
+  },
+  "confirmRestore": {
+    "message": "Restaurer cette sauvegarde ? Le serveur redémarre avec la sauvegarde appliquée.",
+    "description": ""
+  },
+  "confirmDeleteBackup": {
+    "message": "Supprimer cette sauvegarde ? Action irréversible.",
+    "description": ""
+  },
+  "confirmDeleteSchedule": {
+    "message": "Supprimer cette tâche planifiée ?",
+    "description": ""
+  },
+  "backupRestored": {
+    "message": "Restauration lancée (le serveur redémarre)",
+    "description": ""
+  },
+  "backupDeleted": {
+    "message": "Sauvegarde supprimée",
+    "description": ""
+  },
+  "scheduleRunDone": {
+    "message": "Tâche exécutée",
+    "description": ""
+  },
+  "scheduleDeleted": {
+    "message": "Tâche supprimée",
+    "description": ""
+  },
+  "scheduleCreated": {
+    "message": "Tâche créée",
+    "description": ""
+  },
+  "scheduleUpdated": {
+    "message": "Tâche mise à jour",
+    "description": ""
+  },
+  "newSchedule": {
+    "message": "Nouvelle tâche planifiée",
+    "description": ""
+  },
+  "fieldName": {
+    "message": "Nom",
+    "description": ""
+  },
+  "cronMinute": {
+    "message": "Minute (cron)",
+    "description": ""
+  },
+  "cronHour": {
+    "message": "Heure (cron, UTC)",
+    "description": ""
+  },
+  "cronDay": {
+    "message": "Jour semaine (cron)",
+    "description": ""
+  },
+  "scheduleAction": {
+    "message": "Action",
+    "description": ""
+  },
+  "schedulePayload": {
+    "message": "Payload (ex. restart)",
+    "description": ""
+  },
+  "create": {
+    "message": "Créer",
+    "description": ""
+  },
+  "active": {
+    "message": "Active",
+    "description": ""
+  },
+  "inactive": {
+    "message": "Inactive",
+    "description": ""
+  },
+  "metricsUnavailable": {
+    "message": "Métriques indisponibles (serveur éteint ?)",
+    "description": ""
   }
 }

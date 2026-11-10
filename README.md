@@ -12,8 +12,10 @@
 - **Serveurs par boîte** avec statut en temps réel (en ligne / arrêté / démarrage…)
 - **Contrôle power** : démarrer, arrêter, redémarrer, tuer un serveur en un clic
 - **Console** : envoyer des commandes directement au serveur
-- **Backups** : voir la liste et déclencher un backup immédiat
-- **Planifications** : voir les tâches cron de chaque serveur
+- **Backups** : lister, déclencher, **restaurer** et **supprimer** une sauvegarde
+- **Planifications** : lister, **exécuter maintenant**, activer/désactiver, **créer** et supprimer des tâches cron
+- **Métriques** : état, CPU %, barres mémoire/disque utilisées en temps réel
+- **SFTP** : hôte, port et identifiant de connexion (le mot de passe reste dans le panel)
 - **Actualisation automatique** configurable (intervalle réglable)
 - **Badge** sur l'icône de l'extension indiquant le nombre de serveurs en ligne
 - **Raccourci clavier** `Ctrl+Shift+R` (ou `Cmd+Shift+R` sur Mac) pour tout rafraîchir
@@ -67,15 +69,23 @@ Pré-requis : `python3`, `node`, `zip`, `rsync` (tous présents par défaut sur 
 
 | Endpoint | Scope | Usage dans l'extension |
 |---|---|---|
-| `GET /v1/me` | `read` | Validation du token, email du compte |
+| `GET /v1/me` | `read` | Validation du jeton, email du compte |
 | `GET /v1/boites` | `read` | Liste des boîtes |
 | `GET /v1/boites/{id}/servers` | `read` | Serveurs de chaque boîte |
 | `GET /v1/servers/{id}` | `read` | Détail serveur (fiche « … ») |
-| `GET /v1/servers/{id}/backups` | `read` | Liste des backups |
+| `GET /v1/servers/{id}/metrics` | `read` | Métriques temps réel (CPU, RAM, disque) |
+| `GET /v1/servers/{id}/sftp` | `read` | Infos de connexion SFTP |
+| `GET /v1/servers/{id}/backups` | `read` | Liste des sauvegardes |
 | `GET /v1/servers/{id}/schedules` | `read` | Tâches planifiées |
 | `POST /v1/servers/{id}/power?signal=…` | `power` | start / stop / restart / kill |
 | `POST /v1/servers/{id}/command` | `power` | Envoi de commande console |
-| `POST /v1/servers/{id}/backups` | `power` | Déclenchement d'un backup |
+| `POST /v1/servers/{id}/backups` | `power` | Déclenchement d'une sauvegarde |
+| `DELETE /v1/servers/{id}/backups/{backupId}` | `power` | Suppression d'une sauvegarde |
+| `POST /v1/servers/{id}/backups/{backupId}/restore` | `power` | Restauration (`truncate` optionnel) |
+| `POST /v1/servers/{id}/schedules` | `power` | Création d'une tâche cron |
+| `PATCH /v1/servers/{id}/schedules/{scheduleId}` | `power` | Modification / activation |
+| `DELETE /v1/servers/{id}/schedules/{scheduleId}` | `power` | Suppression d'une tâche |
+| `POST /v1/servers/{id}/schedules/{scheduleId}/run` | `power` | Exécution immédiate d'une tâche |
 
 > Attention : les actions power/commande/backup nécessitent un token avec le scope **`power`**.
 > Limite : **60 requêtes/minute** par token (HTTP 429 au-delà).

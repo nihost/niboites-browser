@@ -226,5 +226,129 @@
   "openInPanel": {
     "message": "Open in panel",
     "description": "Open server in the panel"
+  },
+  "metrics": {
+    "message": "Metrics",
+    "description": ""
+  },
+  "cpuUsage": {
+    "message": "CPU",
+    "description": ""
+  },
+  "ramUsage": {
+    "message": "Memory used",
+    "description": ""
+  },
+  "diskUsage": {
+    "message": "Disk used",
+    "description": ""
+  },
+  "state": {
+    "message": "State",
+    "description": ""
+  },
+  "sftp": {
+    "message": "SFTP",
+    "description": ""
+  },
+  "sftpHint": {
+    "message": "The password is never exposed by the API: reset it from the panel (Boîte > SFTP).",
+    "description": ""
+  },
+  "sftpUser": {
+    "message": "Username",
+    "description": ""
+  },
+  "restore": {
+    "message": "Restore",
+    "description": ""
+  },
+  "delete": {
+    "message": "Delete",
+    "description": ""
+  },
+  "truncate": {
+    "message": "Wipe files before restore",
+    "description": ""
+  },
+  "confirmRestore": {
+    "message": "Restore this backup? The server restarts with the backup applied.",
+    "description": ""
+  },
+  "confirmDeleteBackup": {
+    "message": "Delete this backup? Irreversible.",
+    "description": ""
+  },
+  "confirmDeleteSchedule": {
+    "message": "Delete this scheduled task?",
+    "description": ""
+  },
+  "backupRestored": {
+    "message": "Restore started (server restarting)",
+    "description": ""
+  },
+  "backupDeleted": {
+    "message": "Backup deleted",
+    "description": ""
+  },
+  "scheduleRunDone": {
+    "message": "Task run",
+    "description": ""
+  },
+  "scheduleDeleted": {
+    "message": "Task deleted",
+    "description": ""
+  },
+  "scheduleCreated": {
+    "message": "Task created",
+    "description": ""
+  },
+  "scheduleUpdated": {
+    "message": "Task updated",
+    "description": ""
+  },
+  "newSchedule": {
+    "message": "New scheduled task",
+    "description": ""
+  },
+  "fieldName": {
+    "message": "Name",
+    "description": ""
+  },
+  "cronMinute": {
+    "message": "Minute (cron)",
+    "description": ""
+  },
+  "cronHour": {
+    "message": "Hour (cron, UTC)",
+    "description": ""
+  },
+  "cronDay": {
+    "message": "Day of week (cron)",
+    "description": ""
+  },
+  "scheduleAction": {
+    "message": "Action",
+    "description": ""
+  },
+  "schedulePayload": {
+    "message": "Payload (e.g. restart)",
+    "description": ""
+  },
+  "create": {
+    "message": "Create",
+    "description": ""
+  },
+  "active": {
+    "message": "Active",
+    "description": ""
+  },
+  "inactive": {
+    "message": "Inactive",
+    "description": ""
+  },
+  "metricsUnavailable": {
+    "message": "Metrics unavailable (server off?)",
+    "description": ""
   }
 }
