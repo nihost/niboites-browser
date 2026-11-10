@@ -1,6 +1,6 @@
 # NiBoites — Extension navigateur
 
-**NiBoites** est une extension Chrome / Edge / Firefox (Manifest V3) pour contrôler et gérer vos **boîtes et serveurs** (hébergés sur [boites.ni-host.com](https://boites.ni-host.com)) directement depuis votre navigateur, via l'[API publique](https://boites.ni-host.com/docs).
+**NiBoites by NiHost** est une extension Chrome / Edge / Firefox (Manifest V3) pour contrôler et gérer vos **boîtes et serveurs** depuis votre navigateur, via l'[API publique NiBoites v1](https://boites.ni-host.com/docs). Le panel reste [ni-boites.fr](https://ni-boites.fr) ; l'extension couvre les actions routinières (statut, power, console, backups) sans ouvrir le panel.
 
 ![NiBoites](icons/icon128.png)
 
@@ -51,7 +51,7 @@ Pré-requis : `python3`, `node`, `zip`, `rsync` (tous présents par défaut sur 
 4. Cliquez sur **« Charger l'extension non empaquetée »** et sélectionnez le dossier cloné
    (ou dézippez `dist/niboites-<version>.zip` et chargez le dossier obtenu)
 5. Cliquez sur l'icône de l'extension **NiBoites** dans la barre d'outils, puis sur **Options**
-6. Collez votre **token API** (créé depuis [boites.ni-host.com](https://boites.ni-host.com) > Compte > API) puis cliquez sur **Tester le token**
+6. Collez votre **jeton API** (créé sur [ni-boites.fr](https://ni-boites.fr) > Compte > API) puis cliquez sur **Tester le jeton**
 
 ## Utilisation
 
@@ -99,6 +99,19 @@ niboites-browser/
 │   └── build.sh           # Validation + packaging .zip (dist/)
 └── dist/                  # Généré par build.sh (gitignoré)
 ```
+
+## Conformité produit (product.md)
+
+L'extension suit les engagements de marque NiBoites / NiHost :
+
+- **Palette** : primary `#DD4E49`, blue `#49A5DD`, green `#49DDA7`, orange `#DD9C49`, ink `#494949`
+- **Thème clair par défaut** (light-primary) avec **toggle sombre**, persisté localement
+- **Typographie** : Raleway (UI), Montserrat (titres), monospace (console)
+- **Co-branding** : « NiBoites by NiHost » dans le popup et les options
+- **Terminologie** : toujours « boîte / boîtes » dans les textes visibles (FR et EN), jamais « box »
+- **FR-first** : FR langue de référence, EN fourni ; lien panel vers ni-boites.fr, commande/facturation/support vers ni-host.com
+- **Accessibilité** : focus visibles (`:focus-visible`), modale au clavier (Échap, focus à l'ouverture), en-têtes de boîte activables au clavier
+- **Copy** : aucun claim inventé, pas de « unlimited servers », jeux : Minecraft, Hytale, « and more »
 
 ## Sécurité
 

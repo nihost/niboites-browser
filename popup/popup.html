@@ -1,25 +1,38 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" data-theme="light">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>NiBoites</title>
+  <script>
+    // Applique le thème sauvegardé avant le premier paint (évite le flash)
+    try {
+      chrome.storage.local.get('niboites_theme').then(function (d) {
+        document.documentElement.dataset.theme = d.niboites_theme === 'dark' ? 'dark' : 'light';
+      });
+    } catch (e) { /* storage indisponible : thème clair par défaut */ }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Raleway:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="../css/popup.css" />
 </head>
 <body>
   <!-- ── Header ─────────────────────────────────────────── -->
   <header class="header">
     <div class="header-left">
-      <img src="../icons/icon48.png" alt="NiHost" class="logo" />
+      <img src="../icons/icon48.png" alt="NiBoites" class="logo" />
       <div class="header-titles">
         <h1 data-i18n="extName">NiBoites</h1>
+        <span class="byline">by NiHost</span>
         <span id="account-email" class="account-email"></span>
       </div>
     </div>
     <div class="header-actions">
-      <button id="btn-refresh" class="icon-btn" title="Rafraîchir" data-i18n-title="refresh">↻</button>
-      <button id="btn-options" class="icon-btn" title="Options">≡</button>
-      <a id="btn-panel" class="icon-btn" href="https://boites.ni-host.com" target="_blank" rel="noopener" title="Ouvrir le panel">&#8599;</a>
+      <button id="btn-theme" class="icon-btn" title="Basculer clair/sombre" aria-label="Basculer clair/sombre">◐</button>
+      <button id="btn-refresh" class="icon-btn" title="Rafraîchir" data-i18n-title="refresh" aria-label="Rafraîchir">↻</button>
+      <button id="btn-options" class="icon-btn" title="Options" aria-label="Options">≡</button>
+      <a id="btn-panel" class="icon-btn" href="https://ni-boites.fr" target="_blank" rel="noopener" title="Ouvrir le panel ni-boites.fr" aria-label="Ouvrir le panel ni-boites.fr">&#8599;</a>
     </div>
   </header>
 
@@ -30,10 +43,10 @@
   </div>
 
   <!-- ── Error banner ───────────────────────────────────── -->
-  <div id="error-banner" class="error-banner hidden"></div>
+  <div id="error-banner" class="error-banner hidden" role="alert"></div>
 
   <!-- ── Toast ──────────────────────────────────────────── -->
-  <div id="toast" class="toast hidden"></div>
+  <div id="toast" class="toast hidden" role="status"></div>
 
   <!-- ── Main content ───────────────────────────────────── -->
   <main id="main" class="main hidden">
@@ -43,7 +56,7 @@
       <label class="auto-refresh">
         <input type="checkbox" id="toggle-auto-refresh" />
         <span data-i18n="autoRefresh">Auto</span>
-        <input type="number" id="refresh-interval" min="10" max="600" step="10" />
+        <input type="number" id="refresh-interval" min="10" max="600" step="10" aria-label="Intervalle (secondes)" />
         <span>s</span>
       </label>
     </div>
@@ -56,10 +69,10 @@
 
   <!-- ── Server detail modal ────────────────────────────── -->
   <div id="server-modal" class="modal hidden">
-    <div class="modal-content">
+    <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="modal-server-name">
       <div class="modal-header">
         <h2 id="modal-server-name">Serveur</h2>
-        <button id="modal-close" class="icon-btn">✕</button>
+        <button id="modal-close" class="icon-btn" aria-label="Fermer">✕</button>
       </div>
       <div id="modal-body" class="modal-body"></div>
     </div>

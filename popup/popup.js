@@ -18,6 +18,7 @@
     toast: $('#toast'),
     btnRefresh: $('#btn-refresh'),
     btnOptions: $('#btn-options'),
+    btnTheme: $('#btn-theme'),
     btnOpenOptions: $('#btn-open-options'),
     accountEmail: $('#account-email'),
     lastRefresh: $('#last-refresh'),
@@ -103,16 +104,22 @@
       </div>`;
 
     card.innerHTML = `
-      <div class="boite-header">
+      <div class="boite-header" tabindex="0" role="button" aria-expanded="true" aria-label="${escapeHtml(boite.name || boite.id)}">
         <span class="boite-name">${escapeHtml(boite.name || boite.id)} ${statusBadge(boite.status)}</span>
         <span class="chevron">▼</span>
       </div>
       ${specsHtml}
       <div class="servers-list"></div>`;
 
-    // Collapse toggle
-    card.querySelector('.boite-header').addEventListener('click', () => {
+    // Collapse toggle (souris + clavier Entrée/Espace — a11y)
+    const header = card.querySelector('.boite-header');
+    const toggle = () => {
       card.classList.toggle('collapsed');
+      header.setAttribute('aria-expanded', card.classList.contains('collapsed') ? 'false' : 'true');
+    };
+    header.addEventListener('click', toggle);
+    header.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(); }
     });
 
     // Render servers
@@ -177,6 +184,7 @@
     currentModalServer = server;
     els.modalServerName.textContent = server.name || server.id;
     els.serverModal.classList.remove('hidden');
+    els.modalClose.focus(); // a11y : focus dans la modale à l'ouverture
     els.modalBody.innerHTML = `<div class="loading">${t('loading')}</div>`;
 
     // Fetch fresh detail + backups + schedules in parallel
@@ -452,10 +460,27 @@
       .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
   }
 
+  /* ── Thème clair / sombre (light-primary, toggle dark) ── */
+
+  async function initTheme() {
+    const d = await chrome.storage.local.get(api.STORAGE_KEYS.THEME);
+    applyTheme(d[api.STORAGE_KEYS.THEME] === 'dark' ? 'dark' : 'light');
+    els.btnTheme.addEventListener('click', async () => {
+      const next = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+      applyTheme(next);
+      await chrome.storage.local.set({ [api.STORAGE_KEYS.THEME]: next });
+    });
+  }
+  function applyTheme(theme) {
+    document.documentElement.dataset.theme = theme;
+    els.btnTheme.textContent = theme === 'dark' ? '◑' : '◐';
+  }
+
   /* ── Init ─────────────────────────────────────────────── */
 
   function init() {
     applyI18n();
+    initTheme();
 
     els.btnRefresh.addEventListener('click', () => refreshData(true));
     els.btnOptions.addEventListener('click', () => chrome.runtime.openOptionsPage());

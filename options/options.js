@@ -16,6 +16,7 @@
     tokenStatus: $('#token-status'),
     tokenScopes: $('#token-scopes'),
     savedFlash: $('#saved-flash'),
+    optDark: $('#opt-dark'),
     optAutoRefresh: $('#opt-auto-refresh'),
     optInterval: $('#opt-interval'),
     btnSaveSettings: $('#btn-save-settings'),
@@ -53,6 +54,14 @@
     const settings = await api.getSettings();
     els.optAutoRefresh.checked = settings.autoRefresh;
     els.optInterval.value = settings.refreshInterval;
+
+    const theme = await chrome.storage.local.get(api.STORAGE_KEYS.THEME);
+    els.optDark.checked = theme[api.STORAGE_KEYS.THEME] === 'dark';
+    els.optDark.addEventListener('change', async () => {
+      const t = els.optDark.checked ? 'dark' : 'light';
+      document.documentElement.dataset.theme = t;
+      await chrome.storage.local.set({ [api.STORAGE_KEYS.THEME]: t });
+    });
 
     // If we have a token, test it silently to show identity
     if (token) {

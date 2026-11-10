@@ -1,56 +1,230 @@
 {
-  "extName": { "message": "NiBoites — Contrôle rapide", "description": "Extension name" },
-  "extDesc": { "message": "Gérez vos boîtes et serveurs NiBoites directement depuis votre navigateur.", "description": "Extension description" },
-  "noToken": { "message": "Aucun token configuré. Ouvrez les options pour en créer un.", "description": "Message when no API token is set" },
-  "openOptions": { "message": "Ouvrir les options", "description": "Button to open options" },
-  "refresh": { "message": "Rafraîchir", "description": "Refresh button" },
-  "boites": { "message": "Boîtes", "description": "Boîtes section title" },
-  "servers": { "message": "Serveurs", "description": "Servers section title" },
-  "backups": { "message": "Backups", "description": "Backups section title" },
-  "schedules": { "message": "Planifications", "description": "Schedules section title" },
-  "power": { "message": "Alimentation", "description": "Power section" },
-  "console": { "message": "Console", "description": "Console section" },
-  "start": { "message": "Démarrer", "description": "Start action" },
-  "stop": { "message": "Arrêter", "description": "Stop action" },
-  "restart": { "message": "Redémarrer", "description": "Restart action" },
-  "kill": { "message": "Tuer", "description": "Kill action" },
-  "sendCommand": { "message": "Envoyer", "description": "Send command button" },
-  "triggerBackup": { "message": "Lancer un backup", "description": "Trigger backup button" },
-  "backupName": { "message": "Nom du backup (optionnel)", "description": "Backup name placeholder" },
-  "commandPlaceholder": { "message": "Commande console… (ex: say Bonjour)", "description": "Console command placeholder" },
-  "loading": { "message": "Chargement…", "description": "Loading text" },
-  "error": { "message": "Erreur", "description": "Error label" },
-  "status_running": { "message": "En ligne", "description": "Running status" },
-  "status_stopped": { "message": "Arrêté", "description": "Stopped status" },
-  "status_starting": { "message": "Démarrage…", "description": "Starting status" },
-  "status_stopping": { "message": "Arrêt…", "description": "Stopping status" },
-  "status_unknown": { "message": "Inconnu", "description": "Unknown status" },
-  "status_active": { "message": "Active", "description": "Active status" },
-  "status_archived": { "message": "Archivée", "description": "Archived status" },
-  "memory": { "message": "Mémoire", "description": "Memory label" },
-  "cpu": { "message": "CPU", "description": "CPU label" },
-  "disk": { "message": "Disque", "description": "Disk label" },
-  "game": { "message": "Jeu", "description": "Game label" },
-  "tokenLabel": { "message": "Token API personnel", "description": "Token label in options" },
-  "tokenHelp": { "message": "Créez un token depuis votre compte NiHost > Compte > API. Le token est stocké localement dans votre navigateur.", "description": "Token help text" },
-  "save": { "message": "Enregistrer", "description": "Save button" },
-  "saved": { "message": "Enregistré", "description": "Saved confirmation" },
-  "testToken": { "message": "Tester le token", "description": "Test token button" },
-  "tokenValid": { "message": "Token valide", "description": "Token valid message" },
-  "tokenInvalid": { "message": "Token invalide", "description": "Token invalid message" },
-  "scopes": { "message": "Scopes", "description": "Scopes label" },
-  "lastRefresh": { "message": "Dernière actualisation", "description": "Last refresh label" },
-  "noServers": { "message": "Aucun serveur dans cette boîte.", "description": "No servers message" },
-  "noBoites": { "message": "Aucune boîte accessible avec ce token.", "description": "No boîtes message" },
-  "confirmKill": { "message": "Tuer le serveur ? (arrêt brutal)", "description": "Kill confirmation" },
-  "confirmStop": { "message": "Arrêter le serveur ?", "description": "Stop confirmation" },
-  "actionSent": { "message": "Signal envoyé", "description": "Action sent confirmation" },
-  "commandSent": { "message": "Commande envoyée", "description": "Command sent confirmation" },
-  "backupStarted": { "message": "Backup lancé", "description": "Backup started confirmation" },
-  "autoRefresh": { "message": "Actualisation automatique", "description": "Auto-refresh toggle" },
-  "refreshInterval": { "message": "Intervalle (secondes)", "description": "Refresh interval label" },
-  "openPanel": { "message": "Ouvrir le panel NiHost", "description": "Link to panel" },
-  "copied": { "message": "Copié !", "description": "Copied to clipboard" },
-  "serverId": { "message": "ID serveur", "description": "Server ID label" },
-  "copyId": { "message": "Copier l'ID", "description": "Copy ID button" }
+  "extName": {
+    "message": "NiBoites — Contrôle rapide",
+    "description": "Extension name"
+  },
+  "extDesc": {
+    "message": "Gérez vos boîtes et serveurs NiBoites directement depuis votre navigateur.",
+    "description": "Extension description"
+  },
+  "noToken": {
+    "message": "Aucun token configuré. Ouvrez les options pour en créer un.",
+    "description": "Message when no API token is set"
+  },
+  "openOptions": {
+    "message": "Ouvrir les options",
+    "description": "Button to open options"
+  },
+  "refresh": {
+    "message": "Rafraîchir",
+    "description": "Refresh button"
+  },
+  "boites": {
+    "message": "Boîtes",
+    "description": "Boîtes section title"
+  },
+  "servers": {
+    "message": "Serveurs",
+    "description": "Servers section title"
+  },
+  "backups": {
+    "message": "Backups",
+    "description": "Backups section title"
+  },
+  "schedules": {
+    "message": "Planifications",
+    "description": "Schedules section title"
+  },
+  "power": {
+    "message": "Alimentation",
+    "description": "Power section"
+  },
+  "console": {
+    "message": "Console",
+    "description": "Console section"
+  },
+  "start": {
+    "message": "Démarrer",
+    "description": "Start action"
+  },
+  "stop": {
+    "message": "Arrêter",
+    "description": "Stop action"
+  },
+  "restart": {
+    "message": "Redémarrer",
+    "description": "Restart action"
+  },
+  "kill": {
+    "message": "Tuer",
+    "description": "Kill action"
+  },
+  "sendCommand": {
+    "message": "Envoyer",
+    "description": "Send command button"
+  },
+  "triggerBackup": {
+    "message": "Lancer un backup",
+    "description": "Trigger backup button"
+  },
+  "backupName": {
+    "message": "Nom du backup (optionnel)",
+    "description": "Backup name placeholder"
+  },
+  "commandPlaceholder": {
+    "message": "Commande console… (ex: say Bonjour)",
+    "description": "Console command placeholder"
+  },
+  "loading": {
+    "message": "Chargement…",
+    "description": "Loading text"
+  },
+  "error": {
+    "message": "Erreur",
+    "description": "Error label"
+  },
+  "status_running": {
+    "message": "En ligne",
+    "description": "Running status"
+  },
+  "status_stopped": {
+    "message": "Arrêté",
+    "description": "Stopped status"
+  },
+  "status_starting": {
+    "message": "Démarrage…",
+    "description": "Starting status"
+  },
+  "status_stopping": {
+    "message": "Arrêt…",
+    "description": "Stopping status"
+  },
+  "status_unknown": {
+    "message": "Inconnu",
+    "description": "Unknown status"
+  },
+  "status_active": {
+    "message": "Active",
+    "description": "Active status"
+  },
+  "status_archived": {
+    "message": "Archivée",
+    "description": "Archived status"
+  },
+  "memory": {
+    "message": "Mémoire",
+    "description": "Memory label"
+  },
+  "cpu": {
+    "message": "CPU",
+    "description": "CPU label"
+  },
+  "disk": {
+    "message": "Disque",
+    "description": "Disk label"
+  },
+  "game": {
+    "message": "Jeu",
+    "description": "Game label"
+  },
+  "tokenLabel": {
+    "message": "Token API personnel",
+    "description": "Token label in options"
+  },
+  "tokenHelp": {
+    "message": "Créez un jeton sur ni-boites.fr (Compte > API). Le jeton est stocké localement dans votre navigateur.",
+    "description": "Token help text"
+  },
+  "save": {
+    "message": "Enregistrer",
+    "description": "Save button"
+  },
+  "saved": {
+    "message": "Enregistré",
+    "description": "Saved confirmation"
+  },
+  "testToken": {
+    "message": "Tester le token",
+    "description": "Test token button"
+  },
+  "tokenValid": {
+    "message": "Token valide",
+    "description": "Token valid message"
+  },
+  "tokenInvalid": {
+    "message": "Token invalide",
+    "description": "Token invalid message"
+  },
+  "scopes": {
+    "message": "Scopes",
+    "description": "Scopes label"
+  },
+  "lastRefresh": {
+    "message": "Dernière actualisation",
+    "description": "Last refresh label"
+  },
+  "noServers": {
+    "message": "Aucun serveur dans cette boîte.",
+    "description": "No servers message"
+  },
+  "noBoites": {
+    "message": "Aucune boîte accessible avec ce token.",
+    "description": "No boîtes message"
+  },
+  "confirmKill": {
+    "message": "Tuer le serveur ? (arrêt brutal)",
+    "description": "Kill confirmation"
+  },
+  "confirmStop": {
+    "message": "Arrêter le serveur ?",
+    "description": "Stop confirmation"
+  },
+  "actionSent": {
+    "message": "Signal envoyé",
+    "description": "Action sent confirmation"
+  },
+  "commandSent": {
+    "message": "Commande envoyée",
+    "description": "Command sent confirmation"
+  },
+  "backupStarted": {
+    "message": "Backup lancé",
+    "description": "Backup started confirmation"
+  },
+  "autoRefresh": {
+    "message": "Actualisation automatique",
+    "description": "Auto-refresh toggle"
+  },
+  "refreshInterval": {
+    "message": "Intervalle (secondes)",
+    "description": "Refresh interval label"
+  },
+  "openPanel": {
+    "message": "Ouvrir le panel ni-boites.fr",
+    "description": "Link to panel"
+  },
+  "copied": {
+    "message": "Copié !",
+    "description": "Copied to clipboard"
+  },
+  "serverId": {
+    "message": "ID serveur",
+    "description": "Server ID label"
+  },
+  "copyId": {
+    "message": "Copier l'ID",
+    "description": "Copy ID button"
+  },
+  "themeToggle": {
+    "message": "Basculer clair/sombre",
+    "description": "Theme toggle button"
+  },
+  "runNow": {
+    "message": "Exécuter maintenant",
+    "description": "Run a scheduled task now"
+  },
+  "openInPanel": {
+    "message": "Ouvrir dans le panel",
+    "description": "Open server in the panel"
+  }
 }
