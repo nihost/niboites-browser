@@ -1,5 +1,5 @@
 /**
- * NiHost Boîtes — popup logic
+ * NiBoites — popup logic
  * Renders the fleet (boîtes → servers), handles power actions,
  * console commands, backups, schedules and auto-refresh.
  */

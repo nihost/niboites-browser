@@ -1,5 +1,5 @@
 /**
- * NiHost Boîtes — options page logic
+ * NiBoites — options page logic
  * Save / test / clear the API token and configure auto-refresh.
  */
 (function () {

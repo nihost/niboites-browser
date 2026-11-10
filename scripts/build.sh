@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # ─────────────────────────────────────────────────────────────
-# Build NiHost Boîtes — package l'extension en .zip pour les stores
+# Build NiBoites — package l'extension en .zip pour les stores
 #
 # Aucun bundling nécessaire : extension Manifest V3 en HTML/CSS/JS
 # vanilla, sans dépendances. Ce script :
@@ -14,7 +14,7 @@ set -euo pipefail
 cd "$(dirname "$0")/.."
 
 VERSION=$(python3 -c "import json; print(json.load(open('manifest.json'))['version'])")
-NAME="niboites-browser"
+NAME="niboites"
 OUT="dist/${NAME}-${VERSION}.zip"
 
 echo "==> Validation du manifest et des locales"

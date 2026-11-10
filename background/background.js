@@ -1,5 +1,5 @@
 /**
- * NiHost Boîtes — background service worker (Manifest V3)
+ * NiBoites — background service worker (Manifest V3)
  *
  * Responsibilities:
  *  - Keyboard shortcut "refresh-all" → ping every open popup to refresh
@@ -53,8 +53,8 @@ async function updateBadge() {
     }
     await chrome.action.setTitle({
       title: running > 0
-        ? `NiHost — ${running}/${total} serveur(s) en ligne`
-        : `NiHost — aucun serveur en ligne (${total})`,
+        ? `NiBoites — ${running}/${total} serveur(s) en ligne`
+        : `NiBoites — aucun serveur en ligne (${total})`,
     });
   } catch (e) {
     // Silently ignore (token missing, offline, rate-limited…)
@@ -131,7 +131,7 @@ chrome.storage.onChanged.addListener(async (changes, area) => {
       await chrome.notifications.create({
         type: 'basic',
         iconUrl: 'icons/icon128.png',
-        title: 'NiHost — serveurs',
+        title: 'NiBoites — serveurs',
         message: `${running}/${total} serveur(s) en ligne`,
       });
     } catch { /* notifications may be unavailable */ }

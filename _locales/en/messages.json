@@ -1,6 +1,6 @@
 {
-  "extName": { "message": "NiHost Boxes - Quick Control", "description": "Extension name" },
-  "extDesc": { "message": "Manage your NiHost boxes and servers right from your browser.", "description": "Extension description" },
+  "extName": { "message": "NiBoites — Quick Control", "description": "Extension name" },
+  "extDesc": { "message": "Manage your NiBoites boxes and servers right from your browser.", "description": "Extension description" },
   "noToken": { "message": "No token configured. Open options to create one.", "description": "Message when no API token is set" },
   "openOptions": { "message": "Open options", "description": "Button to open options" },
   "refresh": { "message": "Refresh", "description": "Refresh button" },

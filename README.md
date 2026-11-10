@@ -1,8 +1,8 @@
-# NiHost Boîtes — Extension navigateur
+# NiBoites — Extension navigateur
 
-Extension Chrome / Edge / Firefox (Manifest V3) pour contrôler et gérer vos **boîtes et serveurs NiHost** directement depuis votre navigateur, via l'[API publique](https://boites.ni-host.com/docs).
+**NiBoites** est une extension Chrome / Edge / Firefox (Manifest V3) pour contrôler et gérer vos **boîtes et serveurs** (hébergés sur [boites.ni-host.com](https://boites.ni-host.com)) directement depuis votre navigateur, via l'[API publique](https://boites.ni-host.com/docs).
 
-![NiHost](icons/icon128.png)
+![NiBoites](icons/icon128.png)
 
 ## Fonctionnalités
 
@@ -31,7 +31,7 @@ Un seul script pour valider + packager :
 Il :
 1. valide `manifest.json` et les locales (`_locales/*/messages.json`)
 2. vérifie la syntaxe de tous les JS (`node --check`)
-3. génère **`dist/niboites-browser-<version>.zip`** (manifest.json à la racine du zip, prêt à uploader)
+3. génère **`dist/niboites-<version>.zip`** (manifest.json à la racine du zip, prêt à uploader)
 
 Pré-requis : `python3`, `node`, `zip`, `rsync` (tous présents par défaut sur macOS + brew).
 
@@ -39,7 +39,7 @@ Pré-requis : `python3`, `node`, `zip`, `rsync` (tous présents par défaut sur 
 
 | Cible | Fichier à fournir |
 |---|---|
-| Chrome Web Store / Edge Add-ons | `dist/niboites-browser-<version>.zip` (uploader tel quel) |
+| Chrome Web Store / Edge Add-ons | `dist/niboites-<version>.zip` (uploader tel quel) |
 | Firefox AMO | idem, ou le dossier dézippé |
 | `.crx` signé (hors store) | `google-chrome --pack-extension=. --pack-extension-key=key.pem` |
 
@@ -49,8 +49,8 @@ Pré-requis : `python3`, `node`, `zip`, `rsync` (tous présents par défaut sur 
 2. Ouvrez `chrome://extensions` (Chrome/Edge) ou `about:debugging` (Firefox)
 3. Activez le **mode développeur**
 4. Cliquez sur **« Charger l'extension non empaquetée »** et sélectionnez le dossier cloné
-   (ou dézippez `dist/niboites-browser-<version>.zip` et chargez le dossier obtenu)
-5. Cliquez sur l'icône de l'extension dans la barre d'outils → **⚙ Options**
+   (ou dézippez `dist/niboites-<version>.zip` et chargez le dossier obtenu)
+5. Cliquez sur l'icône de l'extension **NiBoites** dans la barre d'outils → **⚙ Options**
 6. Collez votre **token API** (créé depuis [boites.ni-host.com](https://boites.ni-host.com) → Compte → API) puis cliquez sur **Tester le token**
 
 ## Utilisation
