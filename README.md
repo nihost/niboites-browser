@@ -108,6 +108,7 @@ L'extension suit les engagements de marque NiBoites / NiHost :
 - **Thème clair par défaut** (light-primary) avec **toggle sombre**, persisté localement
 - **Typographie** : Raleway (UI), Montserrat (titres), monospace (console)
 - **Co-branding** : « NiBoites by NiHost » dans le popup et les options
+- **Logo** : mascotte officielle NiBoites (la boîte-cookie, `icons/logo-cookie.svg`) pour les icônes d'extension et le header
 - **Terminologie** : toujours « boîte / boîtes » dans les textes visibles (FR et EN), jamais « box »
 - **FR-first** : FR langue de référence, EN fourni ; lien panel vers ni-boites.fr, commande/facturation/support vers ni-host.com
 - **Accessibilité** : focus visibles (`:focus-visible`), modale au clavier (Échap, focus à l'ouverture), en-têtes de boîte activables au clavier

@@ -48,6 +48,7 @@ rsync -a \
   --exclude '*.log' \
   --exclude '*.crx' \
   --exclude '*.zip' \
+  --exclude 'icons/logo-cookie-*.png' \
   ./ "$STAGE"/
 (cd "$STAGE" && zip -qr "$OLDPWD/$OUT" .)
 
