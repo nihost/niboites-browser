@@ -1,0 +1,48 @@
+{
+  "manifest_version": 3,
+  "name": "NiHost Boîtes - Contrôle rapide",
+  "version": "1.0.0",
+  "description": "Gérez vos boîtes et serveurs NiHost directement depuis votre navigateur : statut, start/stop/restart, commandes console, backups.",
+  "default_locale": "fr",
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "action": {
+    "default_popup": "popup/popup.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    },
+    "default_title": "NiHost Boîtes"
+  },
+  "options_page": "options/options.html",
+  "background": {
+    "service_worker": "background/background.js"
+  },
+  "permissions": [
+    "storage",
+    "alarms",
+    "notifications"
+  ],
+  "host_permissions": [
+    "https://boites.ni-host.com/*"
+  ],
+  "commands": {
+    "refresh-all": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+R",
+        "mac": "Command+Shift+R"
+      },
+      "description": "Rafraîchir le statut de toutes les boîtes et serveurs"
+    },
+    "_execute_action": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+N",
+        "mac": "Command+Shift+N"
+      }
+    }
+  }
+}

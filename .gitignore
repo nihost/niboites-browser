@@ -1,0 +1,25 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+*.swp
+*.swo
+*~
+.vscode/
+.idea/
+
+# Build / packages
+*.crx
+*.zip
+node_modules/
+dist/
+build/
+
+# Logs
+*.log
+npm-debug.log*
+
+# Env / secrets
+.env
+.env.local

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NiHost Boîtes</title>
+  <link rel="stylesheet" href="../css/popup.css" />
+</head>
+<body>
+  <!-- ── Header ─────────────────────────────────────────── -->
+  <header class="header">
+    <div class="header-left">
+      <img src="../icons/icon48.png" alt="NiHost" class="logo" />
+      <div class="header-titles">
+        <h1 data-i18n="extName">NiHost Boîtes</h1>
+        <span id="account-email" class="account-email"></span>
+      </div>
+    </div>
+    <div class="header-actions">
+      <button id="btn-refresh" class="icon-btn" title="Rafraîchir" data-i18n-title="refresh">⟳</button>
+      <button id="btn-options" class="icon-btn" title="Options">⚙</button>
+      <a id="btn-panel" class="icon-btn" href="https://boites.ni-host.com" target="_blank" rel="noopener" title="Ouvrir le panel">↗</a>
+    </div>
+  </header>
+
+  <!-- ── No token state ─────────────────────────────────── -->
+  <div id="no-token" class="state hidden">
+    <p data-i18n="noToken">Aucun token configuré.</p>
+    <button id="btn-open-options" class="btn primary" data-i18n="openOptions">Ouvrir les options</button>
+  </div>
+
+  <!-- ── Error banner ───────────────────────────────────── -->
+  <div id="error-banner" class="error-banner hidden"></div>
+
+  <!-- ── Toast ──────────────────────────────────────────── -->
+  <div id="toast" class="toast hidden"></div>
+
+  <!-- ── Main content ───────────────────────────────────── -->
+  <main id="main" class="main hidden">
+    <!-- Toolbar -->
+    <div class="toolbar">
+      <span id="last-refresh" class="last-refresh"></span>
+      <label class="auto-refresh">
+        <input type="checkbox" id="toggle-auto-refresh" />
+        <span data-i18n="autoRefresh">Auto</span>
+        <input type="number" id="refresh-interval" min="10" max="600" step="10" />
+        <span>s</span>
+      </label>
+    </div>
+
+    <!-- Boîtes list -->
+    <div id="boites-list" class="boites-list">
+      <div class="loading" data-i18n="loading">Chargement…</div>
+    </div>
+  </main>
+
+  <!-- ── Server detail modal ────────────────────────────── -->
+  <div id="server-modal" class="modal hidden">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 id="modal-server-name">Serveur</h2>
+        <button id="modal-close" class="icon-btn">✕</button>
+      </div>
+      <div id="modal-body" class="modal-body"></div>
+    </div>
+  </div>
+
+  <script src="../lib/api.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>

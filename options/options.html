@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Options — NiHost Boîtes</title>
+  <style>
+    :root {
+      --bg: #0f172a; --bg-card: #1e293b; --border: #334155;
+      --text: #e2e8f0; --text-dim: #94a3b8;
+      --accent: #6366f1; --accent-hover: #818cf8;
+      --green: #22c55e; --red: #ef4444;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg); color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      font-size: 14px; min-height: 100vh;
+      display: flex; justify-content: center; padding: 40px 16px;
+    }
+    .container { width: 100%; max-width: 520px; }
+    h1 { font-size: 20px; margin-bottom: 4px; display: flex; align-items: center; gap: 10px; }
+    h1 img { width: 32px; height: 32px; border-radius: 8px; }
+    .subtitle { color: var(--text-dim); margin-bottom: 24px; font-size: 13px; }
+    .card {
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: 12px; padding: 20px; margin-bottom: 16px;
+    }
+    .card h2 { font-size: 14px; margin-bottom: 12px; }
+    label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 6px; }
+    .help { font-size: 12px; color: var(--text-dim); margin-bottom: 12px; line-height: 1.5; }
+    .help a { color: var(--accent-hover); }
+    input[type="password"], input[type="text"], input[type="number"] {
+      width: 100%; background: var(--bg); border: 1px solid var(--border);
+      color: var(--text); border-radius: 8px; padding: 10px 12px;
+      font-size: 13px; font-family: monospace;
+    }
+    input:focus { outline: none; border-color: var(--accent); }
+    .row { display: flex; gap: 10px; align-items: center; }
+    .row > * { flex: 1; }
+    button {
+      border: none; border-radius: 8px; padding: 10px 16px;
+      cursor: pointer; font-size: 13px; font-weight: 600; transition: all 0.15s;
+    }
+    .btn-primary { background: var(--accent); color: #fff; }
+    .btn-primary:hover { background: var(--accent-hover); }
+    .btn-secondary { background: var(--border); color: var(--text); }
+    .btn-secondary:hover { background: #475569; }
+    .btn-danger { background: transparent; color: var(--red); border: 1px solid var(--red); }
+    .btn-danger:hover { background: var(--red); color: #fff; }
+    .btn-row { display: flex; gap: 10px; margin-top: 14px; }
+    .status-msg { margin-top: 10px; font-size: 13px; font-weight: 600; }
+    .status-ok { color: var(--green); }
+    .status-err { color: var(--red); }
+    .scopes { display: flex; gap: 6px; margin-top: 6px; flex-wrap: wrap; }
+    .scope-chip {
+      background: var(--accent); color: #fff; font-size: 11px;
+      padding: 2px 8px; border-radius: 10px; font-weight: 600;
+    }
+    .toggle-row { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+    .toggle-row input[type="checkbox"] { width: 18px; height: 18px; accent-color: var(--accent); }
+    .interval-row { display: flex; align-items: center; gap: 8px; font-size: 13px; }
+    .interval-row input { width: 70px; }
+    .saved-flash { color: var(--green); font-size: 12px; margin-left: 8px; opacity: 0; transition: opacity 0.3s; }
+    .saved-flash.show { opacity: 1; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1><img src="../icons/icon48.png" alt="" /> NiHost Boîtes</h1>
+    <p class="subtitle" data-i18n="extDesc">Gérez vos boîtes et serveurs NiHost depuis votre navigateur.</p>
+
+    <!-- Token card -->
+    <div class="card">
+      <h2 data-i18n="tokenLabel">Token API personnel</h2>
+      <p class="help" data-i18n="tokenHelp">
+        Créez un token depuis votre compte NiHost → Compte → API.
+        Le token est stocké localement dans votre navigateur.
+      </p>
+      <label for="token-input" data-i18n="tokenLabel">Token API personnel</label>
+      <input type="password" id="token-input" placeholder="Collez votre token ici…" autocomplete="off" />
+      <div class="btn-row">
+        <button class="btn-primary" id="btn-save" data-i18n="save">Enregistrer</button>
+        <button class="btn-secondary" id="btn-test" data-i18n="testToken">Tester le token</button>
+        <button class="btn-danger" id="btn-clear">🗑</button>
+      </div>
+      <span class="saved-flash" id="saved-flash" data-i18n="saved">Enregistré ✓</span>
+      <div class="status-msg" id="token-status"></div>
+      <div class="scopes" id="token-scopes"></div>
+    </div>
+
+    <!-- Refresh card -->
+    <div class="card">
+      <h2 data-i18n="autoRefresh">Actualisation automatique</h2>
+      <div class="toggle-row">
+        <input type="checkbox" id="opt-auto-refresh" />
+        <label for="opt-auto-refresh" data-i18n="autoRefresh" style="margin:0">Actualisation automatique</label>
+      </div>
+      <div class="interval-row">
+        <label for="opt-interval" data-i18n="refreshInterval" style="margin:0">Intervalle (secondes)</label>
+        <input type="number" id="opt-interval" min="10" max="600" step="10" />
+      </div>
+      <div class="btn-row">
+        <button class="btn-primary" id="btn-save-settings" data-i18n="save">Enregistrer</button>
+      </div>
+      <span class="saved-flash" id="settings-flash" data-i18n="saved">Enregistré ✓</span>
+    </div>
+
+    <!-- Links card -->
+    <div class="card">
+      <h2>Liens</h2>
+      <p class="help">
+        <a href="https://boites.ni-host.com" target="_blank" rel="noopener">Panel NiHost ↗</a><br />
+        <a href="https://boites.ni-host.com/docs" target="_blank" rel="noopener">Documentation API ↗</a>
+      </p>
+    </div>
+  </div>
+
+  <script src="../lib/api.js"></script>
+  <script src="options.js"></script>
+</body>
+</html>
