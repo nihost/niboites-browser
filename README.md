@@ -18,12 +18,38 @@ Extension Chrome / Edge / Firefox (Manifest V3) pour contrôler et gérer vos **
 - 🔔 **Notifications** quand le nombre de serveurs en ligne change
 - 🔒 Token stocké **localement** dans le navigateur (`chrome.storage.local`)
 
+## Build
+
+Aucun bundling ni compilation : l'extension est en **HTML/CSS/JS vanilla (Manifest V3)**, sans aucune dépendance (`npm install` inutile).
+
+Un seul script pour valider + packager :
+
+```bash
+./scripts/build.sh
+```
+
+Il :
+1. valide `manifest.json` et les locales (`_locales/*/messages.json`)
+2. vérifie la syntaxe de tous les JS (`node --check`)
+3. génère **`dist/niboites-browser-<version>.zip`** (manifest.json à la racine du zip, prêt à uploader)
+
+Pré-requis : `python3`, `node`, `zip`, `rsync` (tous présents par défaut sur macOS + brew).
+
+### Pour distribuer
+
+| Cible | Fichier à fournir |
+|---|---|
+| Chrome Web Store / Edge Add-ons | `dist/niboites-browser-<version>.zip` (uploader tel quel) |
+| Firefox AMO | idem, ou le dossier dézippé |
+| `.crx` signé (hors store) | `google-chrome --pack-extension=. --pack-extension-key=key.pem` |
+
 ## Installation (mode développeur)
 
-1. Téléchargez / clonez ce dossier
+1. Clonez ce dépôt : `git clone git@ni-git-01.srv.nihost.fr:ni/niboites-browser.git`
 2. Ouvrez `chrome://extensions` (Chrome/Edge) ou `about:debugging` (Firefox)
 3. Activez le **mode développeur**
-4. Cliquez sur **« Charger l'extension non empaquetée »** et sélectionnez ce dossier
+4. Cliquez sur **« Charger l'extension non empaquetée »** et sélectionnez le dossier cloné
+   (ou dézippez `dist/niboites-browser-<version>.zip` et chargez le dossier obtenu)
 5. Cliquez sur l'icône de l'extension dans la barre d'outils → **⚙ Options**
 6. Collez votre **token API** (créé depuis [boites.ni-host.com](https://boites.ni-host.com) → Compte → API) puis cliquez sur **Tester le token**
 
@@ -70,6 +96,9 @@ niboites-browser/
 │   └── options.js
 └── background/
     └── background.js      # Service worker (badge, alarmes, raccourcis)
+├── scripts/
+│   └── build.sh           # Validation + packaging .zip (dist/)
+└── dist/                  # Généré par build.sh (gitignoré)
 ```
 
 ## Sécurité
