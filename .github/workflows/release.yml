@@ -1,0 +1,43 @@
+name: Release
+
+# Se déclenche sur les tags v* (créés par scripts/bump.sh) :
+# build le .zip et publie une release GitHub avec le zip en asset.
+on:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    name: Publier la release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Version
+        id: version
+        run: echo "v=$(node -p "require('./manifest.json').version")" >> "$GITHUB_OUTPUT"
+
+      - name: Build (validation + zip)
+        run: ./scripts/build.sh
+
+      - name: Notes de release (depuis CHANGELOG.md)
+        run: node scripts/release-notes.js "${{ steps.version.outputs.v }}" > /tmp/notes.md
+
+      - name: Publier la release GitHub avec le .zip
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          V="${{ steps.version.outputs.v }}"
+          gh release create "v$V" "dist/niboites-$V.zip" \
+            --title "NiBoites v$V" \
+            --notes-file /tmp/notes.md
+          echo "Release v$V publiée."

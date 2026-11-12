@@ -127,6 +127,20 @@ L'extension suit les engagements de marque NiBoites / NiHost :
 - **Accessibilité** : focus visibles (`:focus-visible`), modale au clavier (Échap, focus à l'ouverture), en-têtes de boîte activables au clavier
 - **Copy** : aucun claim inventé, pas de « unlimited servers », jeux : Minecraft, Hytale, « and more »
 
+## Versionning & releases
+
+Versionnage **sémantique** (semver) : `manifest.json` est la source de vérité, le `CHANGELOG.md` suit [Keep a Changelog](https://keepachangelog.com/fr/1.1.0/) (section `[Unreleased]` alimentée au fil des PR).
+
+Publier une release :
+
+```bash
+./scripts/bump.sh patch        # ou minor / major : bump manifest + CHANGELOG + commit + tag vX.Y.Z
+git push github main
+git push github vX.Y.Z         # déclenche .github/workflows/release.yml
+```
+
+Le workflow `release.yml` (tags `v*`) build le `.zip`, extrait les notes du `CHANGELOG.md` et publie une **release GitHub** avec `dist/niboites-<version>.zip` en asset.
+
 ## Open source
 
 Ce projet est publié en open source par **NiHost** sur [github.com/nihost/niboites-browser](https://github.com/nihost/niboites-browser), licence **MIT** (voir `LICENSE`). Contributions bienvenues (issues, pull requests).
